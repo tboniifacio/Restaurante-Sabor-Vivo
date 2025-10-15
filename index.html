@@ -3,193 +3,129 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restaurante Sabor Vivo</title>
+    <title>StepZone | Estilo em cada passo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body data-page="home">
     <header class="header">
       <div class="container header__content">
-        <a href="index.html" class="logo">Sabor<span>Vivo</span></a>
+        <a href="index.html" class="logo">Step<span>Zone</span></a>
         <nav class="nav" data-nav>
-          <a href="#home">In&iacute;cio</a>
-          <a href="#menu">Card&aacute;pio</a>
+          <a href="#hero">In&iacute;cio</a>
+          <a href="products.html">Produtos</a>
           <a href="#contato">Contato</a>
-          <a href="#reservas" class="btn btn--sm">Reservar</a>
         </nav>
         <div class="header__actions">
           <a href="cart.html" class="cart-link" aria-label="Abrir carrinho" data-cart-link>
             <span class="cart-link__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" focusable="false">
-                <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-                <path d="M6 6l-2-3H2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                <circle cx="9" cy="19" r="1.5" fill="currentColor" />
-                <circle cx="18" cy="19" r="1.5" fill="currentColor" />
+                <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                <path d="M6 6l-2-3H2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                <circle cx="9" cy="19" r="1.5" fill="currentColor"></circle>
+                <circle cx="18" cy="19" r="1.5" fill="currentColor"></circle>
               </svg>
             </span>
             <span class="badge badge--cart is-hidden" data-cart-badge role="status" aria-live="polite">0</span>
           </a>
-          <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>&#9776;</button>
+          <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
     </header>
 
     <main>
-      <section id="home" class="hero">
-        <div class="overlay"></div>
-        <div class="container hero__content">
-          <h1 class="hero__title">Sabores que encantam, momentos que ficam</h1>
-          <p class="hero__subtitle">Cozinha autoral com ingredientes frescos e locais.</p>
-          <a href="#menu" class="btn btn--lg">Ver Card&aacute;pio</a>
+      <section id="hero" class="hero">
+        <div class="container hero__grid">
+          <div class="hero__text">
+            <span class="hero__tag">Cole&ccedil;&atilde;o Neon</span>
+            <h1 class="hero__title">Estilo em cada passo</h1>
+            <p class="hero__subtitle">
+              Descubra os melhores t&ecirc;nis, &oacute;culos e rel&oacute;gios para expressar sua personalidade &uacute;nica.
+            </p>
+            <a href="products.html" class="btn btn--primary">Ver Produtos</a>
+          </div>
+          <div class="hero__visual">
+            <img src="/img/hero-tenis.svg" alt="T&ecirc;nis StepZone em destaque" />
+            <div class="hero__bubble hero__bubble--pink"></div>
+            <div class="hero__bubble hero__bubble--yellow"></div>
+          </div>
         </div>
       </section>
 
-      <section id="menu" class="menu section">
-        <div class="container">
-          <h2 class="section__title">Nosso Card&aacute;pio</h2>
-          <p class="section__subtitle">Pratos preparados com t&eacute;cnica, paix&atilde;o e um toque de criatividade.</p>
-
-          <div class="grid">
-            <article
-              class="card"
-              data-item-id="risoto-cogumelos"
-              data-item-name="Risoto de Cogumelos"
-              data-item-price="4990"
-              data-item-image="risoto.png"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="risoto.png" alt="Risoto de Cogumelos" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Risoto de Cogumelos</h3>
-                <p class="card__desc">Cremoso, finalizado com azeite trufado e parmes&atilde;o.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 49,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Risoto de Cogumelos ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <article
-              class="card"
-              data-item-id="smash-burger"
-              data-item-name="Smash Burger Artesanal"
-              data-item-price="3490"
-              data-item-image="conheca-smash-burger-o-que-e-como-fazer-hamburgueria.webp"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="conheca-smash-burger-o-que-e-como-fazer-hamburgueria.webp" alt="Smash Burger Artesanal" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Smash Burger Artesanal</h3>
-                <p class="card__desc">Blend da casa, cheddar, cebola caramelizada e p&atilde;o brioche.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 34,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Smash Burger Artesanal ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <article
-              class="card"
-              data-item-id="salada-mediterranea"
-              data-item-name="Salada Mediterr&acirc;nea"
-              data-item-price="2990"
-              data-item-image="261.Salada-mediterranea.webp"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="261.Salada-mediterranea.webp" alt="Salada Mediterr&acirc;nea" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Salada Mediterr&acirc;nea</h3>
-                <p class="card__desc">Folhas, tomate sweet, azeitonas, feta e vinagrete c&iacute;trico.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 29,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Salada Mediterr&acirc;nea ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <article
-              class="card"
-              data-item-id="nhoque-sugo"
-              data-item-name="Nhoque ao Sugo"
-              data-item-price="3990"
-              data-item-image="traditional-italian-potato-gnocchi-with-tomato-sauce-fresh-basil-gray-plate-marbled-backround-780x520.jpg"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="traditional-italian-potato-gnocchi-with-tomato-sauce-fresh-basil-gray-plate-marbled-backround-780x520.jpg" alt="Nhoque ao Sugo" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Nhoque ao Sugo</h3>
-                <p class="card__desc">Macio e leve, molho de tomates assados e manjeric&atilde;o.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 39,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Nhoque ao Sugo ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <article
-              class="card"
-              data-item-id="file-poivre"
-              data-item-name="Fil&eacute; ao Poivre"
-              data-item-price="6990"
-              data-item-image="steak-au-poivre-with-brandy-sauce-780x520.jpg"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="steak-au-poivre-with-brandy-sauce-780x520.jpg" alt="Fil&eacute; ao Poivre" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Fil&eacute; ao Poivre</h3>
-                <p class="card__desc">Fil&eacute; mignon grelhado ao molho cremoso de pimenta e conhaque, finalizado com ervas frescas.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 69,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Fil&eacute; ao Poivre ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <article
-              class="card"
-              data-item-id="cheesecake"
-              data-item-name="Cheesecake"
-              data-item-price="2490"
-              data-item-image="pngtree-slice-of-cheesecake-with-berries-image_16441070.jpg"
-              data-item-type="food"
-            >
-              <div class="card__image">
-                <img src="pngtree-slice-of-cheesecake-with-berries-image_16441070.jpg" alt="Cheesecake de Frutas Vermelhas" />
-              </div>
-              <div class="card__body">
-                <h3 class="card__title">Cheesecake</h3>
-                <p class="card__desc">Cl&aacute;ssico com calda de frutas vermelhas e toque de lim&atilde;o.</p>
-                <div class="card__footer">
-                  <span class="card__price">R$ 24,90</span>
-                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Cheesecake ao carrinho" title="Adicionar ao carrinho">
-                    <span aria-hidden="true">+</span>
-                  </button>
-                </div>
-              </div>
-            </article>
+      <section class="section section--carousel">
+        <div class="container section__header">
+          <div>
+            <h2 class="section__title">Destaques da semana</h2>
+            <p class="section__subtitle">
+              Sele&ccedil;&atilde;o especial de t&ecirc;nis, &oacute;culos e rel&oacute;gios que combinam com o seu ritmo.
+            </p>
           </div>
+          <div class="carousel__controls">
+            <button class="carousel__btn" type="button" data-carousel-prev aria-label="Produtos anteriores">&lsaquo;</button>
+            <button class="carousel__btn" type="button" data-carousel-next aria-label="Pr&oacute;ximos produtos">&rsaquo;</button>
+          </div>
+        </div>
+        <div class="container">
+          <div class="product-carousel" data-carousel>
+            <!-- Cards renderizados via JS -->
+          </div>
+        </div>
+      </section>
+
+      <section class="section categories">
+        <div class="container">
+          <h2 class="section__title">Nossas Categorias</h2>
+          <p class="section__subtitle">Encontre o acess&oacute;rio ideal para cada momento.</p>
+          <div class="categories__grid">
+            <a class="category-card" href="products.html?categoria=tenis">
+              <img src="/img/prod-tenis.svg" alt="T&ecirc;nis StepZone" loading="lazy" />
+              <h3 class="category-card__title">T&ecirc;nis</h3>
+              <p class="category-card__desc">Modelos para corrida, lifestyle e treinos intensos.</p>
+              <span class="category-card__cta">Explorar t&ecirc;nis</span>
+            </a>
+            <a class="category-card" href="products.html?categoria=oculos">
+              <img src="/img/prod-oculos.svg" alt="&Oacute;culos StepZone" loading="lazy" />
+              <h3 class="category-card__title">&Oacute;culos</h3>
+              <p class="category-card__desc">Prote&ccedil;&atilde;o com estilo para qualquer ocasi&atilde;o.</p>
+              <span class="category-card__cta">Explorar &oacute;culos</span>
+            </a>
+            <a class="category-card" href="products.html?categoria=relogios">
+              <img src="/img/prod-relogio.svg" alt="Rel&oacute;gios StepZone" loading="lazy" />
+              <h3 class="category-card__title">Rel&oacute;gios</h3>
+              <p class="category-card__desc">Tecnologia inteligente e design sofisticado.</p>
+              <span class="category-card__cta">Explorar rel&oacute;gios</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--featured">
+        <div class="container">
+          <h2 class="section__title">Produtos em destaque</h2>
+          <p class="section__subtitle">
+            Seis favoritos da comunidade StepZone para voc&ecirc; atualizar o visual sem perder a performance.
+          </p>
+          <div class="products__grid" data-featured-grid>
+            <!-- Produtos destacados renderizados via JS -->
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cta">
+        <div class="container cta">
+          <div class="cta__text">
+            <h2>Assine a StepZone+</h2>
+            <p>Receba ofertas exclusivas, lan&ccedil;amentos antecipados e frete gr&aacute;tis nas compras acima de R$ 299.</p>
+          </div>
+          <form class="cta__form" id="cta-form">
+            <label class="visually-hidden" for="cta-email">Seu e-mail</label>
+            <input type="email" id="cta-email" name="email" placeholder="Digite seu e-mail" required />
+            <button type="submit" class="btn btn--secondary">Quero participar</button>
+          </form>
         </div>
       </section>
     </main>
@@ -197,23 +133,25 @@
     <footer id="contato" class="footer">
       <div class="container footer__grid">
         <div>
-          <a href="index.html" class="logo logo--footer">Sabor<span>Vivo</span></a>
-          <p class="footer__text">Rua das Flores, 123 &mdash; Centro, Cidade/UF</p>
-          <p class="footer__text">(11) 99999-0000 &bull; contato@saborvivo.com</p>
+          <a href="index.html" class="logo logo--footer">Step<span>Zone</span></a>
+          <p class="footer__text">Estilo, tecnologia e conforto para cada passo.</p>
+          <p class="footer__text">contato@stepzone.com &bull; (11) 99999-0000</p>
         </div>
         <div>
-          <p class="footer__title">Siga-nos</p>
+          <p class="footer__title">Siga a StepZone</p>
           <div class="social">
             <a href="#" aria-label="Instagram" class="social__link">Instagram</a>
-            <a href="#" aria-label="Facebook" class="social__link">Facebook</a>
             <a href="#" aria-label="TikTok" class="social__link">TikTok</a>
+            <a href="#" aria-label="YouTube" class="social__link">YouTube</a>
           </div>
         </div>
       </div>
-      <div class="copy">&copy; <span id="year"></span> Sabor Vivo. Todos os direitos reservados.</div>
+      <div class="copy">&copy; <span id="year"></span> StepZone. Todos os direitos reservados.</div>
     </footer>
 
+    <script src="js/catalog.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/carousel.js"></script>
   </body>
 </html>

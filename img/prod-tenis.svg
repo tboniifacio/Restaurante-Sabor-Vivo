@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260">
+  <defs>
+    <linearGradient id="sneaker" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b81"/>
+      <stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient>
+    <linearGradient id="sole" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ffe4f2"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="260" rx="32" fill="#fff5fb"/>
+  <ellipse cx="180" cy="200" rx="120" ry="26" fill="rgba(255,59,129,0.12)"/>
+  <path d="M62 138c18-32 58-54 116-66 54-10 102 20 128 60 9 14 10 28 4 40-8 16-26 26-50 30-54 10-110 8-164-2-40-8-58-26-46-62z" fill="url(#sneaker)"/>
+  <path d="M84 160c8-22 30-36 74-44l72-14c30-6 52 6 64 26 6 10 6 20-2 28-10 10-28 16-50 18l-120 10c-28 2-46-4-54-14-6-8-6-16-2-30z" fill="url(#sole)"/>
+  <path d="M90 150c8-12 24-18 52-24l94-18c16-4 32-2 44 6-2-8-8-16-16-22-12-8-26-10-44-6l-82 18c-28 6-44 18-48 36z" fill="#fff" opacity="0.75"/>
+  <path d="M126 126c24-6 48-10 72-12" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <path d="M118 144c24-4 48-6 72-6" fill="none" stroke="#ffe5ef" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <path d="M110 164c24-2 48-2 72 0" fill="none" stroke="#ffc9df" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="132" cy="170" r="10" fill="#fff"/>
+  <circle cx="132" cy="170" r="6" fill="#ff3b81"/>
+  <circle cx="228" cy="162" r="12" fill="#fff"/>
+  <circle cx="228" cy="162" r="7" fill="#ffd700"/>
+</svg>

@@ -1,308 +1,209 @@
 (function (window, document) {
   'use strict';
 
-  const STORAGE_KEY = 'saborvivo:cart';
-  const SERVICE_FEE_CENTS = 0;
-  const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
-  const COUPONS = {
-    SABOR10: 10,
-    SABORVIP: 15
+  const STORAGE_KEY = 'stepzone:cart';
+  const EVENT_NAME = 'stepzone:cart-change';
+
+  const cartStore = {
+    _supportsStorage: true,
+    _memoryCart: createEmptyCart(),
+
+    getCart() {
+      const cart = this._load();
+      return clone(cart);
+    },
+
+    getItemCount() {
+      const { items } = this._load();
+      return items.reduce((total, item) => total + item.qty, 0);
+    },
+
+    addItem(payload) {
+      const cart = this._load();
+      const normalized = normalizeItem(payload);
+      if (!normalized) return this.getCart();
+
+      const existing = cart.items.find((item) => item.id === normalized.id);
+      if (existing) {
+        existing.qty += normalized.qty;
+      } else {
+        cart.items.push(normalized);
+      }
+
+      return this._save(cart);
+    },
+
+    updateQty(productId, quantity) {
+      const cart = this._load();
+      const item = cart.items.find((entry) => entry.id === productId);
+      if (!item) return this.getCart();
+
+      const nextQty = Math.max(0, Math.round(Number(quantity) || 0));
+      if (nextQty <= 0) {
+        cart.items = cart.items.filter((entry) => entry.id !== productId);
+      } else {
+        item.qty = nextQty;
+      }
+
+      return this._save(cart);
+    },
+
+    removeItem(productId) {
+      const cart = this._load();
+      cart.items = cart.items.filter((entry) => entry.id !== productId);
+      return this._save(cart);
+    },
+
+    clear() {
+      this._memoryCart = createEmptyCart();
+      this._persist(this._memoryCart);
+      dispatchCartChange(this._memoryCart);
+      return this.getCart();
+    },
+
+    getTotals() {
+      const { items } = this._load();
+      const subtotal = items.reduce((total, item) => total + item.price * item.qty, 0);
+      const discount = 0;
+      const total = Math.max(0, subtotal - discount);
+      return { subtotal, discount, total };
+    },
+
+    formatCurrency(valueInCents) {
+      return (valueInCents / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+    },
+
+    _load() {
+      if (!this._supportsStorage) return this._memoryCart;
+
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          this._persist(this._memoryCart);
+          return this._memoryCart;
+        }
+
+        const parsed = JSON.parse(raw);
+        this._memoryCart = normalizeCart(parsed);
+        return this._memoryCart;
+      } catch (error) {
+        console.warn('StepZone: não foi possível ler o carrinho no localStorage, usando memória.', error);
+        this._supportsStorage = false;
+        return this._memoryCart;
+      }
+    },
+
+    _save(cart) {
+      this._memoryCart = normalizeCart(cart);
+      this._memoryCart.updatedAt = Date.now();
+      this._persist(this._memoryCart);
+      dispatchCartChange(this._memoryCart);
+      return this.getCart();
+    },
+
+    _persist(cart) {
+      if (!this._supportsStorage) return;
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+      } catch (error) {
+        console.warn('StepZone: erro ao salvar o carrinho, alternando para memória.', error);
+        this._supportsStorage = false;
+      }
+    }
   };
 
-  let supportsStorage = true;
-  try {
-    const testKey = '__sv-check__';
-    window.localStorage.setItem(testKey, '1');
-    window.localStorage.removeItem(testKey);
-  } catch (error) {
-    supportsStorage = false;
-  }
-
-  let memoryCart = getDefaultCart();
-
-  function getDefaultCart() {
+  function createEmptyCart() {
     return {
       items: [],
-      coupon: null,
-      fee: SERVICE_FEE_CENTS,
       updatedAt: Date.now()
     };
   }
 
-  function cloneCart(cart) {
+  function normalizeItem(data) {
+    const catalog = window.StepZoneCatalog;
+    const payload = typeof data === 'string' ? catalog?.getById(data) : data;
+    if (!payload || !payload.id) return null;
+
+    const product = catalog ? catalog.getById(payload.id) || payload : payload;
+
+    const qty = Math.max(1, Math.round(Number(payload.qty) || 1));
+    const price = resolvePrice(payload.price ?? product.price);
+
+    return {
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price,
+      qty,
+      image: payload.image || product.image,
+      sizes: product.sizes || [],
+      selectedSize: payload.selectedSize || product.selectedSize || null
+    };
+  }
+
+  function normalizeCart(raw) {
+    if (!raw || typeof raw !== 'object') return createEmptyCart();
+    const items = Array.isArray(raw.items) ? raw.items.map(normalizeItem).filter(Boolean) : [];
+    return {
+      items,
+      updatedAt: raw.updatedAt || Date.now()
+    };
+  }
+
+  function resolvePrice(value) {
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      if (value >= 1000) return Math.round(value);
+      return Math.round(value * 100);
+    }
+    if (typeof value === 'string') {
+      const numeric = Number(value.replace(/[^\d]+/g, ''));
+      if (Number.isFinite(numeric)) return numeric;
+    }
+    return 0;
+  }
+
+  function clone(cart) {
     return {
       ...cart,
       items: cart.items.map((item) => ({ ...item }))
     };
   }
 
-  function normalizeItem(raw) {
-    if (!raw || !raw.id) {
-      return null;
-    }
-
-    const id = String(raw.id);
-    const name = raw.name ? String(raw.name) : 'Item';
-    const type = raw.type === 'drink' ? 'drink' : 'food';
-    const price = normalizePrice(raw.price);
-    if (price < 0) {
-      return null;
-    }
-
-    const qty = Math.max(1, Math.round(Number(raw.qty) || 1));
-    const image = raw.image || PLACEHOLDER_IMAGE;
-
-    return { id, name, price, qty, image, type };
-  }
-
-  function normalizePrice(value) {
-    if (typeof value === 'string' && value.includes(',')) {
-      const cents = Number(value.replace(/\D/g, ''));
-      return Number.isFinite(cents) ? cents : 0;
-    }
-
-    const numberValue = Number(value);
-    if (!Number.isFinite(numberValue)) {
-      return 0;
-    }
-
-    if (numberValue > 0 && numberValue < 10) {
-      // Assume value was provided in BRL (e.g. 49.9) and convert to cents
-      return Math.round(numberValue * 100);
-    }
-
-    return Math.round(numberValue);
-  }
-
-  function normalizeCoupon(coupon) {
-    if (!coupon || typeof coupon.code !== 'string') {
-      return null;
-    }
-
-    const code = coupon.code.toUpperCase();
-    const percent = Math.round(Number(coupon.percent));
-
-    if (!percent || percent <= 0) {
-      return null;
-    }
-
-    return {
-      code,
-      percent: Math.min(90, percent)
-    };
-  }
-
-  function normalizeCart(rawCart) {
-    const safeCart = rawCart && typeof rawCart === 'object' ? rawCart : {};
-
-    const items = Array.isArray(safeCart.items)
-      ? safeCart.items
-          .map(normalizeItem)
-          .filter(Boolean)
-      : [];
-
-    const fee = normalizePrice(
-      typeof safeCart.fee === 'number' || typeof safeCart.fee === 'string'
-        ? safeCart.fee
-        : SERVICE_FEE_CENTS
-    );
-
-    const coupon = normalizeCoupon(safeCart.coupon);
-
-    return {
-      items,
-      coupon,
-      fee,
-      updatedAt: safeCart.updatedAt || Date.now()
-    };
-  }
-
-  function loadCart() {
-    if (!supportsStorage) {
-      return cloneCart(memoryCart);
-    }
-
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        memoryCart = getDefaultCart();
-        return cloneCart(memoryCart);
-      }
-
-      const parsed = JSON.parse(raw);
-      memoryCart = normalizeCart(parsed);
-      return cloneCart(memoryCart);
-    } catch (error) {
-      console.warn('Falha ao carregar o carrinho, usando dados em memÃ³ria.', error);
-      memoryCart = normalizeCart(memoryCart);
-      return cloneCart(memoryCart);
-    }
-  }
-
-  function persistCart(cart) {
-    memoryCart = normalizeCart(cart);
-    memoryCart.updatedAt = Date.now();
-
-    if (supportsStorage) {
-      try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(memoryCart));
-      } catch (error) {
-        console.warn('Falha ao salvar o carrinho no localStorage.', error);
-      }
-    }
-
-    notifyChange();
-    return cloneCart(memoryCart);
-  }
-
-  function notifyChange() {
+  function dispatchCartChange(cart) {
     const detail = {
-      cart: cloneCart(memoryCart),
-      totals: computeTotals(memoryCart)
+      cart: clone(cart),
+      totals: cartStore.getTotals()
     };
-    window.dispatchEvent(new CustomEvent('saborvivo:cartchange', { detail }));
+    document.dispatchEvent(new CustomEvent(EVENT_NAME, { detail }));
   }
 
-  function computeTotals(cart) {
-    const subtotal = cart.items.reduce((total, item) => {
-      return total + item.price * item.qty;
-    }, 0);
-
-    const fee = typeof cart.fee === 'number' ? cart.fee : SERVICE_FEE_CENTS;
-    const discount = cart.coupon
-      ? Math.min(subtotal, Math.round((subtotal * cart.coupon.percent) / 100))
-      : 0;
-
-    const total = Math.max(0, subtotal + fee - discount);
-
-    return { subtotal, fee, discount, total };
-  }
-
-  function addItem(item) {
-    const cart = loadCart();
-    const normalizedItem = normalizeItem(item);
-
-    if (!normalizedItem) {
-      return cloneCart(cart);
+  function initStorageCheck() {
+    try {
+      const testKey = '__stepzone_check__';
+      window.localStorage.setItem(testKey, '1');
+      window.localStorage.removeItem(testKey);
+      cartStore._supportsStorage = true;
+    } catch (error) {
+      cartStore._supportsStorage = false;
     }
+  }
 
-    const existing = cart.items.find(({ id }) => id === normalizedItem.id);
-    if (existing) {
-      existing.qty += normalizedItem.qty;
-    } else {
-      cart.items.push(normalizedItem);
+  function handleStorageEvent(event) {
+    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    try {
+      const parsed = JSON.parse(event.newValue);
+      cartStore._memoryCart = normalizeCart(parsed);
+      dispatchCartChange(cartStore._memoryCart);
+    } catch (error) {
+      console.warn('StepZone: falha ao sincronizar o carrinho entre abas.', error);
     }
-
-    return persistCart(cart);
   }
 
-  function removeItem(itemId) {
-    const cart = loadCart();
-    cart.items = cart.items.filter(({ id }) => id !== itemId);
-    return persistCart(cart);
-  }
+  initStorageCheck();
+  window.addEventListener('storage', handleStorageEvent);
 
-  function updateQty(itemId, qty) {
-    const cart = loadCart();
-    const quantity = Math.round(Number(qty));
-    const item = cart.items.find(({ id }) => id === itemId);
-
-    if (!item) {
-      return cloneCart(cart);
-    }
-
-    if (!quantity || quantity <= 0) {
-      cart.items = cart.items.filter(({ id }) => id !== itemId);
-    } else {
-      item.qty = quantity;
-    }
-
-    return persistCart(cart);
-  }
-
-  function clearCart() {
-    return persistCart(getDefaultCart());
-  }
-
-  function setFee(valueInCents) {
-    const cart = loadCart();
-    cart.fee = Math.max(0, normalizePrice(valueInCents));
-    return persistCart(cart);
-  }
-
-  function applyCoupon(code) {
-    if (!code) {
-      return false;
-    }
-
-    const normalizedCode = code.toUpperCase();
-    const percent = COUPONS[normalizedCode];
-
-    if (!percent) {
-      return false;
-    }
-
-    const cart = loadCart();
-    cart.coupon = { code: normalizedCode, percent };
-    persistCart(cart);
-    return true;
-  }
-
-  function removeCoupon() {
-    const cart = loadCart();
-    cart.coupon = null;
-    persistCart(cart);
-  }
-
-  function getCart() {
-    return loadCart();
-  }
-
-  function getTotals() {
-    return computeTotals(loadCart());
-  }
-
-  function getItemCount() {
-    const cart = loadCart();
-    return cart.items.reduce((total, item) => total + item.qty, 0);
-  }
-
-  function formatCurrency(valueInCents) {
-    return (valueInCents / 100).toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    });
-  }
-
-  if (supportsStorage) {
-    window.addEventListener('storage', (event) => {
-      if (event.key !== STORAGE_KEY) {
-        return;
-      }
-
-      try {
-        const nextCart = event.newValue ? JSON.parse(event.newValue) : getDefaultCart();
-        memoryCart = normalizeCart(nextCart);
-        notifyChange();
-      } catch (error) {
-        console.warn('Falha ao sincronizar o carrinho entre abas.', error);
-      }
-    });
-  }
-
-  const api = Object.freeze({
-    addItem,
-    removeItem,
-    updateQty,
-    clearCart,
-    setFee,
-    applyCoupon,
-    removeCoupon,
-    getCart,
-    getTotals,
-    getItemCount,
-    formatCurrency
-  });
-
-  window.SaborVivoCart = api;
+  window.StepZoneCart = cartStore;
 })(window, document);

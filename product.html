@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StepZone | Carrinho</title>
+    <title>StepZone | Detalhes do produto</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body data-page="cart">
+  <body data-page="product">
     <header class="header">
       <div class="container header__content">
         <a href="index.html" class="logo">Step<span>Zone</span></a>
@@ -19,7 +19,7 @@
           <a href="#contato">Contato</a>
         </nav>
         <div class="header__actions">
-          <a href="cart.html" class="cart-link is-active" aria-label="Abrir carrinho" data-cart-link>
+          <a href="cart.html" class="cart-link" aria-label="Abrir carrinho" data-cart-link>
             <span class="cart-link__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" focusable="false">
                 <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
@@ -37,57 +37,34 @@
       </div>
     </header>
 
-    <main class="section section--cart">
-      <div class="container cart">
-        <section class="cart__items">
-          <div class="cart__header">
-            <h1 class="section__title section__title--left">Seu carrinho</h1>
-            <p class="section__subtitle section__subtitle--left">
-              Ajuste quantidades, remova itens e finalize a sua compra quando estiver pronto.
-            </p>
-          </div>
-          <div class="cart__list" data-cart-items></div>
-          <div class="cart__empty is-hidden" data-cart-empty>
-            <p>Seu carrinho está vazio. Explore nossos produtos e adicione seus favoritos.</p>
-            <a class="btn btn--secondary" href="products.html">Ir para produtos</a>
-          </div>
-        </section>
-
-        <aside class="cart__summary">
-          <div class="summary">
-            <h2 class="summary__title">Resumo</h2>
-            <dl class="summary__details">
-              <div>
-                <dt>Subtotal</dt>
-                <dd data-summary-subtotal>R$ 0,00</dd>
-              </div>
-              <div>
-                <dt>Descontos</dt>
-                <dd data-summary-discount>R$ 0,00</dd>
-              </div>
-              <div class="summary__total">
-                <dt>Total</dt>
-                <dd data-summary-total>R$ 0,00</dd>
-              </div>
-            </dl>
-            <div class="summary__actions">
-              <a class="btn btn--ghost" href="products.html">Continuar comprando</a>
-              <a class="btn btn--primary" href="checkout.html" data-checkout-link>Finalizar compra</a>
-            </div>
-          </div>
-        </aside>
+    <main class="section section--product">
+      <div class="container product">
+        <div class="product__gallery">
+          <div class="product__image" data-main-image></div>
+          <div class="product__thumbs" data-thumbnails></div>
+        </div>
+        <div class="product__details" data-product-details>
+          <!-- Conteúdo carregado via JS -->
+        </div>
       </div>
     </main>
+
+    <section class="section section--related">
+      <div class="container">
+        <h2 class="section__title section__title--left">Você também pode gostar</h2>
+        <div class="related__grid" data-related-products></div>
+      </div>
+    </section>
 
     <footer id="contato" class="footer">
       <div class="container footer__grid">
         <div>
           <a href="index.html" class="logo logo--footer">Step<span>Zone</span></a>
-          <p class="footer__text">StepZone assegura pagamentos protegidos e entrega rápida.</p>
+          <p class="footer__text">StepZone — Performance, design e autenticidade sempre com você.</p>
         </div>
         <div>
-          <p class="footer__title">Atendimento</p>
-          <p class="footer__text">atendimento@stepzone.com</p>
+          <p class="footer__title">Contato</p>
+          <p class="footer__text">support@stepzone.com</p>
           <p class="footer__text">(11) 99999-0000</p>
         </div>
       </div>
@@ -97,6 +74,6 @@
     <script src="js/catalog.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/ui.js"></script>
-    <script src="js/cart-page.js"></script>
+    <script src="js/product-page.js"></script>
   </body>
 </html>
