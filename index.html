@@ -9,17 +9,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body data-page="home">
     <header class="header">
       <div class="container header__content">
-        <a href="#" class="logo">Sabor<span>Vivo</span></a>
-        <nav class="nav">
-          <a href="#home">Início</a>
-          <a href="#menu">Cardápio</a>
+        <a href="index.html" class="logo">Sabor<span>Vivo</span></a>
+        <nav class="nav" data-nav>
+          <a href="#home">In&iacute;cio</a>
+          <a href="#menu">Card&aacute;pio</a>
           <a href="#contato">Contato</a>
           <a href="#reservas" class="btn btn--sm">Reservar</a>
         </nav>
-        <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+        <div class="header__actions">
+          <a href="cart.html" class="cart-link" aria-label="Abrir carrinho" data-cart-link>
+            <span class="cart-link__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M6 6l-2-3H2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="9" cy="19" r="1.5" fill="currentColor" />
+                <circle cx="18" cy="19" r="1.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span class="badge badge--cart is-hidden" data-cart-badge role="status" aria-live="polite">0</span>
+          </a>
+          <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>&#9776;</button>
+        </div>
       </div>
     </header>
 
@@ -29,79 +42,151 @@
         <div class="container hero__content">
           <h1 class="hero__title">Sabores que encantam, momentos que ficam</h1>
           <p class="hero__subtitle">Cozinha autoral com ingredientes frescos e locais.</p>
-          <a href="#menu" class="btn btn--lg">Ver Cardápio</a>
+          <a href="#menu" class="btn btn--lg">Ver Card&aacute;pio</a>
         </div>
       </section>
 
       <section id="menu" class="menu section">
         <div class="container">
-          <h2 class="section__title">Nosso Cardápio</h2>
-          <p class="section__subtitle">Pratos preparados com técnica, paixão e um toque de criatividade.</p>
+          <h2 class="section__title">Nosso Card&aacute;pio</h2>
+          <p class="section__subtitle">Pratos preparados com t&eacute;cnica, paix&atilde;o e um toque de criatividade.</p>
 
           <div class="grid">
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="risoto-cogumelos"
+              data-item-name="Risoto de Cogumelos"
+              data-item-price="4990"
+              data-item-image="risoto.png"
+              data-item-type="food"
+            >
               <div class="card__image">
-                <img src="risoto.png" />
+                <img src="risoto.png" alt="Risoto de Cogumelos" />
               </div>
               <div class="card__body">
                 <h3 class="card__title">Risoto de Cogumelos</h3>
-                <p class="card__desc">Cremoso, finalizado com azeite trufado e parmesão.</p>
-                <span class="card__price">R$ 49,90</span>
+                <p class="card__desc">Cremoso, finalizado com azeite trufado e parmes&atilde;o.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 49,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Risoto de Cogumelos ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="smash-burger"
+              data-item-name="Smash Burger Artesanal"
+              data-item-price="3490"
+              data-item-image="conheca-smash-burger-o-que-e-como-fazer-hamburgueria.webp"
+              data-item-type="food"
+            >
               <div class="card__image">
-                <img src="conheca-smash-burger-o-que-e-como-fazer-hamburgueria.webp" alt="Burger Artesanal" />
+                <img src="conheca-smash-burger-o-que-e-como-fazer-hamburgueria.webp" alt="Smash Burger Artesanal" />
               </div>
               <div class="card__body">
-                <h3 class="card__title"> Smash Burger Artesanal</h3>
-                <p class="card__desc">Blend da casa, cheddar, cebola caramelizada e pão brioche.</p>
-                <span class="card__price">R$ 34,90</span>
+                <h3 class="card__title">Smash Burger Artesanal</h3>
+                <p class="card__desc">Blend da casa, cheddar, cebola caramelizada e p&atilde;o brioche.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 34,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Smash Burger Artesanal ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="salada-mediterranea"
+              data-item-name="Salada Mediterr&acirc;nea"
+              data-item-price="2990"
+              data-item-image="261.Salada-mediterranea.webp"
+              data-item-type="food"
+            >
               <div class="card__image">
-                <img src="261.Salada-mediterranea.webp" alt="Salada Mediterrânea" />
+                <img src="261.Salada-mediterranea.webp" alt="Salada Mediterr&acirc;nea" />
               </div>
               <div class="card__body">
-                <h3 class="card__title">Salada Mediterrânea</h3>
-                <p class="card__desc">Folhas, tomate sweet, azeitonas, feta e vinagrete cítrico.</p>
-                <span class="card__price">R$ 29,90</span>
+                <h3 class="card__title">Salada Mediterr&acirc;nea</h3>
+                <p class="card__desc">Folhas, tomate sweet, azeitonas, feta e vinagrete c&iacute;trico.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 29,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Salada Mediterr&acirc;nea ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="nhoque-sugo"
+              data-item-name="Nhoque ao Sugo"
+              data-item-price="3990"
+              data-item-image="traditional-italian-potato-gnocchi-with-tomato-sauce-fresh-basil-gray-plate-marbled-backround-780x520.jpg"
+              data-item-type="food"
+            >
               <div class="card__image">
-                <img src="traditional-italian-potato-gnocchi-with-tomato-sauce-fresh-basil-gray-plate-marbled-backround-780x520.jpg" alt="Gnocchi ao Sugo" />
+                <img src="traditional-italian-potato-gnocchi-with-tomato-sauce-fresh-basil-gray-plate-marbled-backround-780x520.jpg" alt="Nhoque ao Sugo" />
               </div>
               <div class="card__body">
                 <h3 class="card__title">Nhoque ao Sugo</h3>
-                <p class="card__desc">Macio e leve, molho de tomates assados e manjericão.</p>
-                <span class="card__price">R$ 39,90</span>
+                <p class="card__desc">Macio e leve, molho de tomates assados e manjeric&atilde;o.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 39,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Nhoque ao Sugo ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="file-poivre"
+              data-item-name="Fil&eacute; ao Poivre"
+              data-item-price="6990"
+              data-item-image="steak-au-poivre-with-brandy-sauce-780x520.jpg"
+              data-item-type="food"
+            >
               <div class="card__image">
-                <img src="steak-au-poivre-with-brandy-sauce-780x520.jpg" alt="Filé ao Poivre" />
+                <img src="steak-au-poivre-with-brandy-sauce-780x520.jpg" alt="Fil&eacute; ao Poivre" />
               </div>
               <div class="card__body">
-                <h3 class="card__title">Filé ao Poivre</h3>
-                <p class="card__desc">Filé mignon grelhado ao molho cremoso de pimenta e conhaque, finalizado com ervas frescas..</p>
-                <span class="card__price">R$ 69,90</span>
+                <h3 class="card__title">Fil&eacute; ao Poivre</h3>
+                <p class="card__desc">Fil&eacute; mignon grelhado ao molho cremoso de pimenta e conhaque, finalizado com ervas frescas.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 69,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Fil&eacute; ao Poivre ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <article class="card">
+            <article
+              class="card"
+              data-item-id="cheesecake"
+              data-item-name="Cheesecake"
+              data-item-price="2490"
+              data-item-image="pngtree-slice-of-cheesecake-with-berries-image_16441070.jpg"
+              data-item-type="food"
+            >
               <div class="card__image">
                 <img src="pngtree-slice-of-cheesecake-with-berries-image_16441070.jpg" alt="Cheesecake de Frutas Vermelhas" />
               </div>
               <div class="card__body">
                 <h3 class="card__title">Cheesecake</h3>
-                <p class="card__desc">Clássico com calda de frutas vermelhas e toque de limão.</p>
-                <span class="card__price">R$ 24,90</span>
+                <p class="card__desc">Cl&aacute;ssico com calda de frutas vermelhas e toque de lim&atilde;o.</p>
+                <div class="card__footer">
+                  <span class="card__price">R$ 24,90</span>
+                  <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Cheesecake ao carrinho" title="Adicionar ao carrinho">
+                    <span aria-hidden="true">+</span>
+                  </button>
+                </div>
               </div>
             </article>
           </div>
@@ -112,9 +197,9 @@
     <footer id="contato" class="footer">
       <div class="container footer__grid">
         <div>
-          <a href="#" class="logo logo--footer">Sabor<span>Vivo</span></a>
-          <p class="footer__text">Rua das Flores, 123 — Centro, Cidade/UF</p>
-          <p class="footer__text">(11) 99999-0000 • contato@saborvivo.com</p>
+          <a href="index.html" class="logo logo--footer">Sabor<span>Vivo</span></a>
+          <p class="footer__text">Rua das Flores, 123 &mdash; Centro, Cidade/UF</p>
+          <p class="footer__text">(11) 99999-0000 &bull; contato@saborvivo.com</p>
         </div>
         <div>
           <p class="footer__title">Siga-nos</p>
@@ -125,18 +210,10 @@
           </div>
         </div>
       </div>
-      <div class="copy">© <span id="year"></span> Sabor Vivo. Todos os direitos reservados.</div>
+      <div class="copy">&copy; <span id="year"></span> Sabor Vivo. Todos os direitos reservados.</div>
     </footer>
 
-    <script>
-      const btn = document.querySelector('.nav__toggle');
-      const nav = document.querySelector('.nav');
-      btn.addEventListener('click', () => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true' || false;
-        btn.setAttribute('aria-expanded', !expanded);
-        nav.classList.toggle('is-open');
-      });
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
   </body>
 </html>

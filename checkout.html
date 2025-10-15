@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | Restaurante Sabor Vivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="checkout">
+    <header class="header">
+      <div class="container header__content">
+        <a href="index.html" class="logo">Sabor<span>Vivo</span></a>
+        <nav class="nav" data-nav>
+          <a href="index.html#home">In&iacute;cio</a>
+          <a href="index.html#menu">Card&aacute;pio</a>
+          <a href="index.html#contato">Contato</a>
+          <a href="index.html#reservas" class="btn btn--sm">Reservar</a>
+        </nav>
+        <div class="header__actions">
+          <a href="cart.html" class="cart-link" aria-label="Abrir carrinho" data-cart-link>
+            <span class="cart-link__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M6 6l-2-3H2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="9" cy="19" r="1.5" fill="currentColor" />
+                <circle cx="18" cy="19" r="1.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span class="badge badge--cart is-hidden" data-cart-badge role="status" aria-live="polite">0</span>
+          </a>
+          <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>&#9776;</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section checkout-section">
+        <div class="container checkout-layout">
+          <section class="checkout-summary">
+            <h1 class="section__title section__title--left">Resumo do pedido</h1>
+            <p class="section__subtitle section__subtitle--left">Confira os itens selecionados antes de finalizar.</p>
+            <div class="summary-card">
+              <div class="order-items" data-checkout-items></div>
+              <dl class="summary-list summary-list--checkout">
+                <div class="summary-item">
+                  <dt>Subtotal</dt>
+                  <dd data-checkout-subtotal>R$ 0,00</dd>
+                </div>
+                <div class="summary-item">
+                  <dt>Taxa/servi&ccedil;o</dt>
+                  <dd data-checkout-fee>R$ 0,00</dd>
+                </div>
+                <div class="summary-item">
+                  <dt>Desconto</dt>
+                  <dd data-checkout-discount>R$ 0,00</dd>
+                </div>
+                <div class="summary-item summary-item--total">
+                  <dt>Total</dt>
+                  <dd data-checkout-total>R$ 0,00</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+          <section class="payment-panel">
+            <h2 class="section__title section__title--left">Pagamento</h2>
+            <p class="section__subtitle section__subtitle--left">Escolha a forma de pagamento preferida.</p>
+
+            <div class="payment-methods" role="tablist">
+              <label class="payment-option">
+                <input type="radio" name="payment-method" value="pix" checked data-payment-radio />
+                <span>PIX</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment-method" value="credit" data-payment-radio />
+                <span>Cart&atilde;o de cr&eacute;dito</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment-method" value="debit" data-payment-radio />
+                <span>Cart&atilde;o de d&eacute;bito</span>
+              </label>
+            </div>
+
+            <div class="payment-form is-active" data-payment-form="pix">
+              <h3 class="payment-title">Pagamento via PIX</h3>
+              <p class="payment-text">Escaneie o QR Code ou copie o c&oacute;digo para realizar o pagamento.</p>
+              <div class="pix-box">
+                <div class="pix-qr" data-pix-qr></div>
+                <div class="pix-code">
+                  <label for="pix-code" class="pix-label">C&oacute;digo copia e cola</label>
+                  <textarea id="pix-code" class="pix-input" readonly data-pix-code></textarea>
+                  <button type="button" class="btn btn--sm copy-btn" data-copy-pix>Copiar c&oacute;digo</button>
+                </div>
+              </div>
+              <button class="btn pay-btn" type="button" data-pay-pix>Confirmar pagamento PIX</button>
+            </div>
+
+            <form class="payment-form" data-payment-form="credit" novalidate>
+              <h3 class="payment-title">Cart&atilde;o de cr&eacute;dito</h3>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="credit-name">Nome impresso no cart&atilde;o</label>
+                  <input id="credit-name" type="text" autocomplete="cc-name" required data-credit-name />
+                  <small class="field-error" data-error-for="credit-name"></small>
+                </div>
+                <div class="form-field">
+                  <label for="credit-number">N&uacute;mero do cart&atilde;o</label>
+                  <input id="credit-number" type="text" inputmode="numeric" autocomplete="cc-number" maxlength="19" required data-credit-number />
+                  <small class="field-error" data-error-for="credit-number"></small>
+                </div>
+                <div class="form-field form-field--split">
+                  <div>
+                    <label for="credit-expiration">Validade (MM/AA)</label>
+                    <input id="credit-expiration" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" required data-credit-expiration />
+                    <small class="field-error" data-error-for="credit-expiration"></small>
+                  </div>
+                  <div>
+                    <label for="credit-cvv">CVV</label>
+                    <input id="credit-cvv" type="password" inputmode="numeric" maxlength="4" autocomplete="cc-csc" required data-credit-cvv />
+                    <small class="field-error" data-error-for="credit-cvv"></small>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="credit-installments">Parcelas</label>
+                  <select id="credit-installments" data-credit-installments>
+                    <option value="1">1x sem juros</option>
+                    <option value="2">2x sem juros</option>
+                    <option value="3">3x sem juros</option>
+                    <option value="4">4x sem juros</option>
+                    <option value="5">5x sem juros</option>
+                    <option value="6">6x sem juros</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn pay-btn" type="submit" data-pay-credit>Pagar com cr&eacute;dito</button>
+            </form>
+
+            <form class="payment-form" data-payment-form="debit" novalidate>
+              <h3 class="payment-title">Cart&atilde;o de d&eacute;bito</h3>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="debit-name">Nome impresso no cart&atilde;o</label>
+                  <input id="debit-name" type="text" autocomplete="cc-name" required data-debit-name />
+                  <small class="field-error" data-error-for="debit-name"></small>
+                </div>
+                <div class="form-field">
+                  <label for="debit-number">N&uacute;mero do cart&atilde;o</label>
+                  <input id="debit-number" type="text" inputmode="numeric" autocomplete="cc-number" maxlength="19" required data-debit-number />
+                  <small class="field-error" data-error-for="debit-number"></small>
+                </div>
+                <div class="form-field form-field--split">
+                  <div>
+                    <label for="debit-expiration">Validade (MM/AA)</label>
+                    <input id="debit-expiration" type="text" inputmode="numeric" placeholder="MM/AA" maxlength="5" required data-debit-expiration />
+                    <small class="field-error" data-error-for="debit-expiration"></small>
+                  </div>
+                  <div>
+                    <label for="debit-cvv">CVV</label>
+                    <input id="debit-cvv" type="password" inputmode="numeric" maxlength="3" autocomplete="cc-csc" required data-debit-cvv />
+                    <small class="field-error" data-error-for="debit-cvv"></small>
+                  </div>
+                </div>
+              </div>
+              <button class="btn pay-btn" type="submit" data-pay-debit>Pagar com d&eacute;bito</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div>
+          <a href="index.html" class="logo logo--footer">Sabor<span>Vivo</span></a>
+          <p class="footer__text">Rua das Flores, 123 &mdash; Centro, Cidade/UF</p>
+          <p class="footer__text">(11) 99999-0000 &bull; contato@saborvivo.com</p>
+        </div>
+        <div>
+          <p class="footer__title">Siga-nos</p>
+          <div class="social">
+            <a href="#" aria-label="Instagram" class="social__link">Instagram</a>
+            <a href="#" aria-label="Facebook" class="social__link">Facebook</a>
+            <a href="#" aria-label="TikTok" class="social__link">TikTok</a>
+          </div>
+        </div>
+      </div>
+      <div class="copy">&copy; <span id="year"></span> Sabor Vivo. Todos os direitos reservados.</div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/checkout.js"></script>
+  </body>
+</html>

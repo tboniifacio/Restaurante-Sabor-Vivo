@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrinho | Restaurante Sabor Vivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="cart">
+    <header class="header">
+      <div class="container header__content">
+        <a href="index.html" class="logo">Sabor<span>Vivo</span></a>
+        <nav class="nav" data-nav>
+          <a href="index.html#home">In&iacute;cio</a>
+          <a href="index.html#menu">Card&aacute;pio</a>
+          <a href="index.html#contato">Contato</a>
+          <a href="index.html#reservas" class="btn btn--sm">Reservar</a>
+        </nav>
+        <div class="header__actions">
+          <a href="cart.html" class="cart-link is-active" aria-label="Abrir carrinho" data-cart-link>
+            <span class="cart-link__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M6 6l-2-3H2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <circle cx="9" cy="19" r="1.5" fill="currentColor" />
+                <circle cx="18" cy="19" r="1.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span class="badge badge--cart is-hidden" data-cart-badge role="status" aria-live="polite">0</span>
+          </a>
+          <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>&#9776;</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section cart-section">
+        <div class="container cart-layout">
+          <section class="cart-panel">
+            <div class="cart-panel__header">
+              <h1 class="section__title section__title--left">Seu carrinho</h1>
+              <p class="section__subtitle section__subtitle--left">Ajuste quantidades, adicione bebidas e finalize quando quiser.</p>
+            </div>
+            <div class="cart-items" data-cart-items></div>
+            <div class="cart-empty" data-empty-cart>
+              <div class="cart-empty__card">
+                <h3>Seu carrinho est&aacute; vazio</h3>
+                <p>Que tal adicionar alguns pratos deliciosos do nosso card&aacute;pio?</p>
+                <a href="index.html#menu" class="btn btn--sm">Explorar card&aacute;pio</a>
+              </div>
+            </div>
+          </section>
+
+          <aside class="summary-panel">
+            <h2 class="summary-title">Resumo</h2>
+            <dl class="summary-list">
+              <div class="summary-item">
+                <dt>Subtotal</dt>
+                <dd data-summary-subtotal>R$ 0,00</dd>
+              </div>
+              <div class="summary-item">
+                <dt>Taxa/servi&ccedil;o</dt>
+                <dd data-summary-fee>R$ 0,00</dd>
+              </div>
+              <div class="summary-item">
+                <dt>Desconto</dt>
+                <dd data-summary-discount>R$ 0,00</dd>
+              </div>
+              <div class="summary-item summary-item--total">
+                <dt>Total</dt>
+                <dd data-summary-total>R$ 0,00</dd>
+              </div>
+            </dl>
+
+            <div class="coupon-box">
+              <label for="coupon-code" class="coupon-label">Cupom de desconto</label>
+              <div class="coupon-input-group">
+                <input id="coupon-code" class="coupon-input" type="text" placeholder="Digite seu cupom" aria-describedby="coupon-help" data-coupon-input />
+                <button class="btn btn--sm coupon-btn" type="button" data-apply-coupon>Aplicar</button>
+              </div>
+              <p id="coupon-help" class="coupon-help">Ex.: SABOR10 para 10% de desconto.</p>
+              <div class="coupon-active is-hidden" data-coupon-applied>
+                <span data-coupon-label></span>
+                <button type="button" class="remove-coupon-btn" aria-label="Remover cupom" data-remove-coupon>&times;</button>
+              </div>
+            </div>
+
+            <div class="summary-actions">
+              <a href="index.html#menu" class="btn btn--ghost">Continuar comprando</a>
+              <a href="checkout.html" class="btn" data-checkout-link>Pagar agora</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section drinks-section">
+        <div class="container">
+          <h2 class="section__title section__title--left">Adicione bebidas</h2>
+          <p class="section__subtitle section__subtitle--left">Para acompanhar, escolha as bebidas favoritas.</p>
+          <div class="drink-grid">
+            <article
+              class="drink-card"
+              data-item-id="agua-500"
+              data-item-name="&Aacute;gua 500ml"
+              data-item-price="490"
+              data-item-image="https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=400&q=80"
+              data-item-type="drink"
+            >
+              <div class="drink-card__info">
+                <h3 class="drink-card__title">&Aacute;gua 500ml</h3>
+                <span class="drink-card__price">R$ 4,90</span>
+              </div>
+              <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar &Aacute;gua 500ml ao carrinho" title="Adicionar ao carrinho">
+                <span aria-hidden="true">+</span>
+              </button>
+            </article>
+
+            <article
+              class="drink-card"
+              data-item-id="refrigerante-lata"
+              data-item-name="Refrigerante Lata"
+              data-item-price="790"
+              data-item-image="https://images.unsplash.com/photo-1604908176997-12518821c6ef?auto=format&fit=crop&w=400&q=80"
+              data-item-type="drink"
+            >
+              <div class="drink-card__info">
+                <h3 class="drink-card__title">Refrigerante Lata</h3>
+                <span class="drink-card__price">R$ 7,90</span>
+              </div>
+              <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Refrigerante Lata ao carrinho" title="Adicionar ao carrinho">
+                <span aria-hidden="true">+</span>
+              </button>
+            </article>
+
+            <article
+              class="drink-card"
+              data-item-id="suco-natural"
+              data-item-name="Suco Natural"
+              data-item-price="1290"
+              data-item-image="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=400&q=80"
+              data-item-type="drink"
+            >
+              <div class="drink-card__info">
+                <h3 class="drink-card__title">Suco Natural</h3>
+                <span class="drink-card__price">R$ 12,90</span>
+              </div>
+              <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Suco Natural ao carrinho" title="Adicionar ao carrinho">
+                <span aria-hidden="true">+</span>
+              </button>
+            </article>
+
+            <article
+              class="drink-card"
+              data-item-id="cerveja-long-neck"
+              data-item-name="Cerveja Long Neck"
+              data-item-price="1390"
+              data-item-image="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80"
+              data-item-type="drink"
+            >
+              <div class="drink-card__info">
+                <h3 class="drink-card__title">Cerveja Long Neck</h3>
+                <span class="drink-card__price">R$ 13,90</span>
+              </div>
+              <button class="icon-btn add-to-cart-btn" type="button" data-add-to-cart aria-label="Adicionar Cerveja Long Neck ao carrinho" title="Adicionar ao carrinho">
+                <span aria-hidden="true">+</span>
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div>
+          <a href="index.html" class="logo logo--footer">Sabor<span>Vivo</span></a>
+          <p class="footer__text">Rua das Flores, 123 &mdash; Centro, Cidade/UF</p>
+          <p class="footer__text">(11) 99999-0000 &bull; contato@saborvivo.com</p>
+        </div>
+        <div>
+          <p class="footer__title">Siga-nos</p>
+          <div class="social">
+            <a href="#" aria-label="Instagram" class="social__link">Instagram</a>
+            <a href="#" aria-label="Facebook" class="social__link">Facebook</a>
+            <a href="#" aria-label="TikTok" class="social__link">TikTok</a>
+          </div>
+        </div>
+      </div>
+      <div class="copy">&copy; <span id="year"></span> Sabor Vivo. Todos os direitos reservados.</div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+  </body>
+</html>
